@@ -33,6 +33,18 @@ run 'rm -rf vendor'
 run 'curl -L https://github.com/lewagon/stylesheets/archive/master.zip > stylesheets.zip'
 run 'unzip stylesheets.zip -d app/assets && rm stylesheets.zip && mv app/assets/rails-stylesheets-master app/assets/stylesheets'
 
+run "yarn add tailwindcss"
+run "yarn add @fullhuman/postcss-purgecss"
+
+run "mkdir -p app/javascript/stylesheets"
+
+append_to_file("app/javascript/packs/application.js", 'import "stylesheets/application"')
+inject_into_file("./postcss.config.js",
+"let tailwindcss = require('tailwindcss');\n",  before: "module.exports")
+inject_into_file("./postcss.config.js", "\n    tailwindcss('./app/javascript/stylesheets/tailwind.config.js'),", after: "plugins: [")
+
+run "mkdir -p app/javascript/stylesheets/components"
+
 # Dev environment
 ########################################
 gsub_file('config/environments/development.rb', /config\.assets\.debug.*/, 'config.assets.debug = false')
