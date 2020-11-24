@@ -30,20 +30,13 @@ YAML
 ########################################
 run 'rm -rf app/assets/stylesheets'
 run 'rm -rf vendor'
-run 'curl -L https://github.com/lewagon/stylesheets/archive/master.zip > stylesheets.zip'
-run 'unzip stylesheets.zip -d app/assets && rm stylesheets.zip && mv app/assets/rails-stylesheets-master app/assets/stylesheets'
-
-run "yarn add tailwindcss"
-run "yarn add @fullhuman/postcss-purgecss"
-
 run "mkdir -p app/javascript/stylesheets"
-
-append_to_file("app/javascript/packs/application.js", 'import "stylesheets/application"')
-inject_into_file("./postcss.config.js",
-"let tailwindcss = require('tailwindcss');\n",  before: "module.exports")
-inject_into_file("./postcss.config.js", "\n    tailwindcss('./app/javascript/stylesheets/tailwind.config.js'),", after: "plugins: [")
-
 run "mkdir -p app/javascript/stylesheets/components"
+run "rm postcss.config.js"
+
+run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
+run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
+run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv application.scss app/javascript/stylesheets'
 
 # Dev environment
 ########################################
@@ -94,7 +87,7 @@ after_bundle do
   # Generators: db + simple form + pages controller
   ########################################
   rails_command 'db:drop db:create db:migrate'
-  generate('simple_form:install', '--bootstrap')
+  generate('simple_form:install')
   generate(:controller, 'pages', 'home', '--skip-routes', '--no-test-framework')
 
   # Routes
@@ -114,20 +107,17 @@ after_bundle do
 
   # Webpacker / Yarn
   ########################################
-  run 'yarn add popper.js jquery bootstrap'
+  run "yarn add tailwindcss"
+  run "yarn add @fullhuman/postcss-purgecss"
   append_file 'app/javascript/packs/application.js', <<~JS
-
-
     // ----------------------------------------------------
     // Note: ABOVE IS RAILS DEFAULT CONFIGURATION
     // WRITE YOUR OWN JS STARTING FROM HERE 👇
     // ----------------------------------------------------
 
-    // External imports
-    import "bootstrap";
-
     // Internal imports, e.g:
     // import { initSelect2 } from '../components/init_select2';
+    import "stylesheets/application"
 
     document.addEventListener('turbolinks:load', () => {
       // Call your functions here, e.g:
@@ -141,15 +131,6 @@ after_bundle do
 
       // Preventing Babel from transpiling NodeModules packages
       environment.loaders.delete('nodeModules');
-
-      // Bootstrap 4 has a dependency over jQuery & Popper.js:
-      environment.plugins.prepend('Provide',
-        new webpack.ProvidePlugin({
-          $: 'jquery',
-          jQuery: 'jquery',
-          Popper: ['popper.js', 'default']
-        })
-      );
 
     JS
   end
@@ -165,7 +146,7 @@ after_bundle do
   # Git
   ########################################
   git add: '.'
-  git commit: "-m 'Initial commit with minimal template from https://github.com/maeldd/rails-templates'"
+  git commit: "-m 'Initial commit with minimal tailwind template from https://github.com/maeldd/rails-templates'"
 
   # Fix puma config
   gsub_file('config/puma.rb', 'pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }', '# pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }')
