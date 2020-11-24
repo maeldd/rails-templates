@@ -35,7 +35,7 @@ run "mkdir -p app/javascript/stylesheets/components"
 
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
-run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv application.scss app/javascript/stylesheets'
+run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
 
 # Dev environment
 ########################################
