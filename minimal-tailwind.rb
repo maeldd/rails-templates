@@ -32,7 +32,6 @@ run 'rm -rf app/assets/stylesheets'
 run 'rm -rf vendor'
 run "mkdir -p app/javascript/stylesheets"
 run "mkdir -p app/javascript/stylesheets/components"
-run "rm postcss.config.js"
 
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
