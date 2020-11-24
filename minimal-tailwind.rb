@@ -33,7 +33,6 @@ run 'rm -rf vendor'
 run "mkdir -p app/javascript/stylesheets"
 run "mkdir -p app/javascript/stylesheets/components"
 
-run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
 
@@ -133,6 +132,9 @@ after_bundle do
 
     JS
   end
+
+  run "rm postcss.config.js"
+  run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
 
   # Dotenv
   ########################################
