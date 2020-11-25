@@ -28,7 +28,7 @@ YAML
 
 # Assets
 ########################################
-run 'rm -rf app/assets/stylesheets'
+run 'rm -rf app/assets/stylesheets/application.css'
 run 'rm -rf vendor'
 run "mkdir -p app/javascript/stylesheets"
 run "mkdir -p app/javascript/stylesheets/components"
@@ -36,6 +36,7 @@ run "mkdir -p app/javascript/stylesheets/components"
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
 run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
 
+run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/assets/stylesheets/application.scss -o application.scss -s && mv application.scss app/assets/stylesheets'
 # Dev environment
 ########################################
 gsub_file('config/environments/development.rb', /config\.assets\.debug.*/, 'config.assets.debug = false')
@@ -56,6 +57,7 @@ gsub_file('app/views/layouts/application.html.erb', "<%= javascript_pack_tag 'ap
 style = <<~HTML
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= stylesheet_pack_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 HTML
 gsub_file('app/views/layouts/application.html.erb', "<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>", style)
 
@@ -142,7 +144,7 @@ after_bundle do
 
   # Rubocop
   ########################################
-  run 'curl -L https://raw.githubusercontent.com/lewagon/rails-templates/master/.rubocop.yml > .rubocop.yml'
+  run 'curl -L https://github.com/maeldd/rails-templates/blob/master/.rubocop.yml -o .rubocop.yml -s'
 
   # Git
   ########################################
