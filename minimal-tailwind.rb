@@ -33,10 +33,9 @@ run 'rm -rf vendor'
 run "mkdir -p app/javascript/stylesheets"
 run "mkdir -p app/javascript/stylesheets/components"
 
-run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
-run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
-
-run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/assets/stylesheets/application.scss -o application.scss -s && mv application.scss app/assets/stylesheets'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/assets/stylesheets/application.scss -o application.scss -s && mv application.scss app/assets/stylesheets'
 # Dev environment
 ########################################
 gsub_file('config/environments/development.rb', /config\.assets\.debug.*/, 'config.assets.debug = false')
@@ -136,7 +135,7 @@ after_bundle do
   end
 
   run "rm postcss.config.js"
-  run 'curl -L https://github.com/maeldd/rails-templates/tree/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
+  run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
 
   # Dotenv
   ########################################
@@ -144,7 +143,7 @@ after_bundle do
 
   # Rubocop
   ########################################
-  run 'curl -L https://github.com/maeldd/rails-templates/blob/master/.rubocop.yml -o .rubocop.yml -s'
+  run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/.rubocop.yml -o .rubocop.yml -s'
 
   # Git
   ########################################
