@@ -37,8 +37,8 @@ run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tai
 run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
 run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/assets/stylesheets/application.scss -o application.scss -s && mv application.scss app/assets/stylesheets'
 
-run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_buttons.scss -o _buttons.scss -s && mv application.scss app/javascript/stylesheets/components'
-run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_forms.scss -o _forms.scss -s && mv application.scss app/javascript/stylesheets/components'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_buttons.scss -o _buttons.scss -s && mv _buttons.scss app/javascript/stylesheets/components'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_forms.scss -o _forms.scss -s && mv _forms.scss app/javascript/stylesheets/components'
 # Dev environment
 ########################################
 gsub_file('config/environments/development.rb', /config\.assets\.debug.*/, 'config.assets.debug = false')
