@@ -24,10 +24,21 @@ gsub_file('Gemfile', /# gem 'redis'/, "gem 'redis'")
 
 # Assets
 ########################################
-run 'rm -rf app/assets/stylesheets'
+run 'rm -rf app/assets/stylesheets/application.css'
 run 'rm -rf vendor'
-run 'curl -L https://github.com/lewagon/stylesheets/archive/master.zip > stylesheets.zip'
-run 'unzip stylesheets.zip -d app/assets && rm stylesheets.zip && mv app/assets/rails-stylesheets-master app/assets/stylesheets'
+run "mkdir -p app/javascript/stylesheets"
+run "mkdir -p app/javascript/stylesheets/components"
+run "mkdir -p app/javascript/stylesheets/images"
+run "mkdir -p app/javascript/stylesheets/images/icons"
+
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/assets/stylesheets/application.scss -o application.scss -s && mv application.scss app/assets/stylesheets'
+
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_buttons.scss -o _buttons.scss -s && mv _buttons.scss app/javascript/stylesheets/components'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_forms.scss -o _forms.scss -s && mv _forms.scss app/javascript/stylesheets/components'
+
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/images/icons/checkmark.svg -o checkmark.svg -s && mv checkmark.svg app/javascript/stylesheets/images/icons'
 
 # Dev environment
 ########################################
@@ -46,6 +57,7 @@ gsub_file('app/views/layouts/application.html.erb', "<%= javascript_pack_tag 'ap
 style = <<~HTML
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= stylesheet_pack_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 HTML
 gsub_file('app/views/layouts/application.html.erb', "<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>", style)
 
@@ -53,25 +65,18 @@ gsub_file('app/views/layouts/application.html.erb', "<%= stylesheet_link_tag 'ap
 ########################################
 file 'app/views/shared/_flashes.html.erb', <<~HTML
   <% if notice %>
-    <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
-      <%= notice %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="bg-green-500">
+      <div class="container px-2 py-4 mx-auto font-sans font-medium text-center text-white"><%= notice %></div>
     </div>
   <% end %>
   <% if alert %>
-    <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-      <%= alert %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="bg-red-500">
+      <div class="container px-2 py-4 mx-auto font-sans font-medium text-center text-white"><%= alert %></div>
     </div>
   <% end %>
 HTML
 
-run 'curl -L https://github.com/lewagon/awesome-navbars/raw/master/templates/_navbar_wagon.html.erb > app/views/shared/_navbar.html.erb'
-run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/logo.png > app/assets/images/logo.png'
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/views/_navbar_wagon.html.erb > app/views/shared/_navbar.html.erb'
 
 inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
   <<-HTML
@@ -107,7 +112,7 @@ after_bundle do
   # Generators: db + simple form + pages controller
   ########################################
   rails_command 'db:drop db:create db:migrate'
-  generate('simple_form:install', '--bootstrap')
+  generate('simple_form:install')
   generate(:controller, 'pages', 'home', '--skip-routes', '--no-test-framework')
 
   # Routes
@@ -162,7 +167,9 @@ after_bundle do
 
   # Webpacker / Yarn
   ########################################
-  run 'yarn add popper.js jquery bootstrap'
+  # Until all the plugin are on postcss@8 we need to use tailwindcss@compat to be complatible with postcss@7 plugin
+  run "yarn add tailwindcss@compat postcss@^7 autoprefixer@^9"
+  run "yarn add @fullhuman/postcss-purgecss"
   append_file 'app/javascript/packs/application.js', <<~JS
 
 
@@ -172,7 +179,6 @@ after_bundle do
     // ----------------------------------------------------
 
     // External imports
-    import "bootstrap";
 
     // Internal imports, e.g:
     // import { initSelect2 } from '../components/init_select2';
@@ -189,15 +195,12 @@ after_bundle do
       // Preventing Babel from transpiling NodeModules packages
       environment.loaders.delete('nodeModules');
       // Bootstrap 4 has a dependency over jQuery & Popper.js:
-      environment.plugins.prepend('Provide',
-        new webpack.ProvidePlugin({
-          $: 'jquery',
-          jQuery: 'jquery',
-          Popper: ['popper.js', 'default']
-        })
-      );
+
     JS
   end
+
+  run "rm postcss.config.js"
+  run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/postcss.config.js -o postcss.config.js -s'
 
   # Dotenv
   ########################################
@@ -205,7 +208,7 @@ after_bundle do
 
   # Rubocop
   ########################################
-  run 'curl -L https://raw.githubusercontent.com/lewagon/rails-templates/master/.rubocop.yml > .rubocop.yml'
+  run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/.rubocop.yml -o .rubocop.yml -s'
 
   # Git
   ########################################
