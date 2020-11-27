@@ -32,6 +32,8 @@ run 'rm -rf app/assets/stylesheets/application.css'
 run 'rm -rf vendor'
 run "mkdir -p app/javascript/stylesheets"
 run "mkdir -p app/javascript/stylesheets/components"
+run "mkdir -p app/javascript/stylesheets/images"
+run "mkdir -p app/javascript/stylesheets/images/icons"
 
 run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/application.scss -o application.scss -s && mv application.scss app/javascript/stylesheets'
 run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/tailwind.config.js -o tailwind.config.js -s && mv tailwind.config.js app/javascript/stylesheets'
@@ -39,6 +41,8 @@ run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tai
 
 run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_buttons.scss -o _buttons.scss -s && mv _buttons.scss app/javascript/stylesheets/components'
 run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/components/_forms.scss -o _forms.scss -s && mv _forms.scss app/javascript/stylesheets/components'
+
+run 'curl -L https://raw.githubusercontent.com/maeldd/rails-templates/master/tailwindcss/images/icons/checkmark.svg -o checkmark.svg -s && mv checkmark.svg app/javascript/stylesheets/images/icons'
 # Dev environment
 ########################################
 gsub_file('config/environments/development.rb', /config\.assets\.debug.*/, 'config.assets.debug = false')
