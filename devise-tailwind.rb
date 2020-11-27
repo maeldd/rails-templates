@@ -182,6 +182,7 @@ after_bundle do
 
     // Internal imports, e.g:
     // import { initSelect2 } from '../components/init_select2';
+    import "stylesheets/application"
 
     document.addEventListener('turbolinks:load', () => {
       // Call your functions here, e.g:
