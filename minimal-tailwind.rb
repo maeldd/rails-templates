@@ -109,7 +109,9 @@ after_bundle do
 
   # Webpacker / Yarn
   ########################################
-  run "yarn add tailwindcss"
+
+  # Until all the plugin are on postcss@8 we need to use tailwindcss@compat to be complatible with postcss@7 plugin
+  run "yarn add tailwindcss@compat postcss@^7 autoprefixer@^9"
   run "yarn add @fullhuman/postcss-purgecss"
   append_file 'app/javascript/packs/application.js', <<~JS
     // ----------------------------------------------------
