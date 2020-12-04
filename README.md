@@ -80,4 +80,10 @@ rails new \
 
 ## API Templates
 
-Coming...
+```bash
+rails new \
+  --database postgresql \
+  --api \
+  -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise-api.rb \
+  CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
+```
