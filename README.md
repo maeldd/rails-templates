@@ -84,6 +84,12 @@ rails new \
 rails new \
   --database postgresql \
   --api \
+  --skip-test
+  --skip-action-text \
+  --skip-sprockets \
+  --skip-javascript \
+  --skip-webpack-install \
+  --skip-yarn \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise-api.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```

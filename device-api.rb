@@ -5,10 +5,8 @@ run "if uname | grep -q 'Darwin'; then pgrep spring | xargs kill -9; fi"
 inject_into_file 'Gemfile', before: 'group :development, :test do' do
   <<~RUBY
     gem 'devise'
-
     gem 'autoprefixer-rails'
     gem 'font-awesome-sass'
-    gem 'simple_token_authentication'
   RUBY
 end
 
@@ -17,6 +15,7 @@ inject_into_file 'Gemfile', after: 'group :development, :test do' do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'dotenv-rails'
+  gem 'rspec-rails'
   RUBY
 end
 
@@ -72,14 +71,16 @@ after_bundle do
   generate('devise:install')
   generate('devise', 'User')
 
+  # RSpec
+  #######################################
+  generate('rspec:install')
+
   # App controller
   ########################################
-  run 'rm app/controllers/application_controller.rb'
-  file 'app/controllers/application_controller.rb', <<~RUBY
-    class ApplicationController < ActionController::Base
-    #{  "protect_from_forgery with: :exception\n" if Rails.version < "5.2"}  before_action :authenticate_user!
-    end
-  RUBY
+  # First we create the api directory
+  run "mkdir -p app/controllers/api/"
+  # Followed by the v1 directory
+  run "mkdir -p app/controllers/api/v1"
 
   # migrate + devise views
   ########################################
