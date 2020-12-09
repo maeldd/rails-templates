@@ -6,7 +6,6 @@ inject_into_file 'Gemfile', before: 'group :development, :test do' do
   <<~RUBY
     gem 'devise'
     gem 'autoprefixer-rails'
-    gem 'font-awesome-sass'
   RUBY
 end
 
@@ -40,7 +39,6 @@ file 'README.md', markdown_file_content, force: true
 ########################################
 generators = <<~RUBY
   config.generators do |generate|
-    generate.assets false
     generate.helper false
     generate.test_framework :test_unit, fixture: false
   end

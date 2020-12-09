@@ -84,7 +84,7 @@ rails new \
 rails new \
   --database postgresql \
   --api \
-  --skip-test
+  --skip-test \
   --skip-action-text \
   --skip-sprockets \
   --skip-javascript \
