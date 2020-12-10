@@ -17,6 +17,7 @@ inject_into_file 'Gemfile', after: 'group :development, :test do' do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'dotenv-rails'
+  gem 'rspec-rails'
   RUBY
 end
 
@@ -88,6 +89,10 @@ after_bundle do
   # Routes
   ########################################
   route "root to: 'pages#home'"
+
+  # RSpec
+  #######################################
+  generate('rspec:install')
 
   # Git ignore
   ########################################

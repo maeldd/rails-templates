@@ -12,6 +12,7 @@ Get a minimal rails 5.1+ app ready to be deployed on Heroku with Bootstrap, Simp
 rails new \
   --database postgresql \
   --webpack \
+  --skip-test \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/minimal.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
@@ -24,6 +25,7 @@ Same as minimal **plus** a Devise install with a generated `User` model.
 rails new \
   --database postgresql \
   --webpack \
+  --skip-test \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
@@ -36,6 +38,7 @@ Same as Devise **plus** a React install.
 rails new \
   --database postgresql \
   --webpack \
+  --skip-test \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
@@ -50,6 +53,7 @@ Get a minimal rails 5.1+ app ready to be deployed on Heroku with Tailwind, Simpl
 rails new \
   --database postgresql \
   --webpack \
+  --skip-test \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/minimal-tailwind.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
@@ -62,6 +66,7 @@ Same as minimal **plus** a Devise install with a generated `User` model.
 rails new \
   --database postgresql \
   --webpack \
+  --skip-test \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise-tailwind.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
@@ -74,6 +79,7 @@ Same as Devise **plus** a React install.
 rails new \
   --database postgresql \
   --webpack \
+  --skip-test \
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
