@@ -17,6 +17,7 @@ inject_into_file 'Gemfile', after: 'group :development, :test do' do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'dotenv-rails'
+  gem 'rspec-rails'
   RUBY
 end
 
@@ -133,6 +134,10 @@ after_bundle do
   ########################################
   generate('devise:install')
   generate('devise', 'User')
+
+  # RSpec
+  #######################################
+  generate('rspec:install')
 
   # App controller
   ########################################
