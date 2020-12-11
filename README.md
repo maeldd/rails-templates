@@ -35,7 +35,7 @@ Same as Devise **plus** a React install.
 ```bash
 rails new \
   --database postgresql \
-  --webpack \
+  --webpack=react
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
@@ -73,7 +73,7 @@ Same as Devise **plus** a React install.
 ```bash
 rails new \
   --database postgresql \
-  --webpack \
+  --webpack=react
   -m https://raw.githubusercontent.com/maeldd/rails-templates/master/devise.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
